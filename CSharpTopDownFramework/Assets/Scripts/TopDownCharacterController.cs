@@ -28,6 +28,10 @@ public class TopDownCharacterController : MonoBehaviour
     //The maximum speed the player can move
     [SerializeField] private float m_playerMaxSpeed = 1000f;
 
+    private float m_fireTimeout = 0;
+
+    private Vector3 mousePos;
+
     #endregion
 
     /// <summary>
@@ -93,6 +97,30 @@ public class TopDownCharacterController : MonoBehaviour
             // just log that an attack has been registered for now
             // we will look at how to do this in future sessions.
             Debug.Log("Attack!");
+        }
+
+        Vector3 mousePointOnScreen = Camera.main.ScreenToWorldPoint(mousePos);
+
+        if (m_attackAction.IsPressed() && Time.time > m_fireTimeout)
+        {
+            m_fireTimeout = Time.time + m_fireRate;
+            Fire();
+        }
+    }
+
+    [Header("Projectile Parameters")]
+    [SerializeField] GameObject m_projectilePrefab;
+    [SerializeField] Transform m_firePoint;
+    [SerializeField] float m_projectileSpeed;
+    [SerializeField] float m_fireRate;
+
+    void Fire()
+    {
+        GameObject projectileToSpawn = Instantiate(m_projectilePrefab, m_firePoint.position, Quaternion.identity);
+
+        if (projectileToSpawn.GetComponent<Rigidbody2D>() != null)
+        {
+            projectileToSpawn.GetComponent<Rigidbody2D>().AddForce(Vector2.up * m_projectileSpeed, ForceMode2D.Impulse);
         }
     }
 }

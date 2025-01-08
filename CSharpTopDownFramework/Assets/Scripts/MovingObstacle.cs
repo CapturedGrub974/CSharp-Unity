@@ -5,6 +5,7 @@ public class MovingObstacle : MonoBehaviour
     [SerializeField] private Transform m_startWaypoint;
     [SerializeField] private Transform m_endWaypoint;
     [SerializeField] private float m_speed = 5;
+    [SerializeField] private int damage;
 
     private Transform m_target;
 
@@ -25,6 +26,10 @@ public class MovingObstacle : MonoBehaviour
         if (collision.CompareTag("MovingObstacleWaypoint"))
         {
             ChangeTarget();
+        }
+        else if (collision.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<HealthManager>().HurtPlayer(damage);
         }
     }
 
