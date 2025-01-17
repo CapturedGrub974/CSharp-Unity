@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.FilePathAttribute;
 
 /// <summary>
 /// A class to control the top down character.
@@ -29,7 +30,7 @@ public class TopDownCharacterController : MonoBehaviour
     [SerializeField] private float m_playerMaxSpeed = 1000f;
 
     private float m_fireTimeout = 0;
-
+    private Vector2 m_lastDirection;
     private Vector3 mousePos;
 
     #endregion
@@ -99,8 +100,6 @@ public class TopDownCharacterController : MonoBehaviour
             Debug.Log("Attack!");
         }
 
-        Vector3 mousePointOnScreen = Camera.main.ScreenToWorldPoint(mousePos);
-
         if (m_attackAction.IsPressed() && Time.time > m_fireTimeout)
         {
             m_fireTimeout = Time.time + m_fireRate;
@@ -114,13 +113,19 @@ public class TopDownCharacterController : MonoBehaviour
     [SerializeField] float m_projectileSpeed;
     [SerializeField] float m_fireRate;
 
-    void Fire()
+    private void Fire()
     {
+        Vector3 mousePointOnScreen = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 fireDirection = (mousePointOnScreen - m_firePoint.position).normalized;
+
         GameObject projectileToSpawn = Instantiate(m_projectilePrefab, m_firePoint.position, Quaternion.identity);
 
         if (projectileToSpawn.GetComponent<Rigidbody2D>() != null)
         {
-            projectileToSpawn.GetComponent<Rigidbody2D>().AddForce(Vector2.up * m_projectileSpeed, ForceMode2D.Impulse);
+            projectileToSpawn.GetComponent<Rigidbody2D>().AddForce(fireDirection * m_projectileSpeed, ForceMode2D.Impulse);
         }
+
+        float angle = Mathf.Atan2(fireDirection.y, fireDirection.x) * Mathf.Rad2Deg;
+        projectileToSpawn.transform.rotation = Quaternion.Euler(0, 0, angle + 270);
     }
 }
