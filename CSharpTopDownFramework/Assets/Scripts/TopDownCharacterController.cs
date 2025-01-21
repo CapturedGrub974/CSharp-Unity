@@ -13,7 +13,6 @@ public class TopDownCharacterController : MonoBehaviour
 
     //The inputs that we need to retrieve from the input system.
     private InputAction m_moveAction;
-    private InputAction m_attackAction;
 
     //The components that we need to edit to make the player move smoothly.
     private Animator m_animator;
@@ -29,10 +28,6 @@ public class TopDownCharacterController : MonoBehaviour
     //The maximum speed the player can move
     [SerializeField] private float m_playerMaxSpeed = 1000f;
 
-    private float m_fireTimeout = 0;
-    private Vector2 m_lastDirection;
-    private Vector3 mousePos;
-
     #endregion
 
     /// <summary>
@@ -43,7 +38,6 @@ public class TopDownCharacterController : MonoBehaviour
     {
         //bind movement inputs to variables
         m_moveAction = InputSystem.actions.FindAction("Move");
-        m_attackAction = InputSystem.actions.FindAction("Attack");
         
         //get components from Character game object so that we can use them later.
         m_animator = GetComponent<Animator>();
@@ -91,41 +85,5 @@ public class TopDownCharacterController : MonoBehaviour
             m_animator.SetFloat("Horizontal", m_playerDirection.x);
             m_animator.SetFloat("Vertical", m_playerDirection.y);
         }
-
-        // check if an attack has been triggered.
-        if (m_attackAction.IsPressed())
-        {
-            // just log that an attack has been registered for now
-            // we will look at how to do this in future sessions.
-            Debug.Log("Attack!");
-        }
-
-        if (m_attackAction.IsPressed() && Time.time > m_fireTimeout)
-        {
-            m_fireTimeout = Time.time + m_fireRate;
-            Fire();
-        }
-    }
-
-    [Header("Projectile Parameters")]
-    [SerializeField] GameObject m_projectilePrefab;
-    [SerializeField] Transform m_firePoint;
-    [SerializeField] float m_projectileSpeed;
-    [SerializeField] float m_fireRate;
-
-    private void Fire()
-    {
-        Vector3 mousePointOnScreen = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 fireDirection = (mousePointOnScreen - m_firePoint.position).normalized;
-
-        GameObject projectileToSpawn = Instantiate(m_projectilePrefab, m_firePoint.position, Quaternion.identity);
-
-        if (projectileToSpawn.GetComponent<Rigidbody2D>() != null)
-        {
-            projectileToSpawn.GetComponent<Rigidbody2D>().AddForce(fireDirection * m_projectileSpeed, ForceMode2D.Impulse);
-        }
-
-        float angle = Mathf.Atan2(fireDirection.y, fireDirection.x) * Mathf.Rad2Deg;
-        projectileToSpawn.transform.rotation = Quaternion.Euler(0, 0, angle + 270);
     }
 }
