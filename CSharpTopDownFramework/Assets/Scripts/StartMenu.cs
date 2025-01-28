@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class menuScript : MonoBehaviour
+public class StartMenu : MonoBehaviour
 {
 
     public Canvas quitMenu;

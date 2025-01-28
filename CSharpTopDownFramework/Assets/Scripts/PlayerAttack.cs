@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerShooting : MonoBehaviour
+public class PlayerAttack : MonoBehaviour
 {
+    [Header("Melee")]
+    public bool m_swordEquipped;
+
+    [Header("Ranged")]
     [SerializeField] GameObject m_projectilePrefab;
     [SerializeField] Transform m_firePoint;
     [SerializeField] float m_projectileSpeed;
@@ -11,6 +15,7 @@ public class PlayerShooting : MonoBehaviour
     private Vector2 m_lastDirection;
     private Vector3 mousePos;
     private InputAction m_attackAction;
+    public bool m_bowEquipped;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

@@ -84,6 +84,12 @@ public class TopDownCharacterController : MonoBehaviour
         {
             m_animator.SetFloat("Horizontal", m_playerDirection.x);
             m_animator.SetFloat("Vertical", m_playerDirection.y);
+
+            //float angle = Mathf.Atan2(m_torchDirection.y, m_torchDirection.x) * Mathf.Rad2Deg;
+            //m_torchLight.rotation = Quaternion.Euler(0, 0, angle - 90);
         }
     }
+    
+    [Header("Lighting parameters")]
+    [SerializeField] private Transform m_torchLight;
 }
