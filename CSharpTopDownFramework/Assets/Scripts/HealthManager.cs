@@ -47,5 +47,9 @@ public class HealthManager : MonoBehaviour
             gameObject.SetActive(false);
             SceneManager.LoadScene(2);
         }
+        else if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
     }
 }

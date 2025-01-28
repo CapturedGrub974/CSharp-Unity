@@ -3,10 +3,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [Header("Melee")]
-    public bool m_swordEquipped;
-
-    [Header("Ranged")]
     [SerializeField] GameObject m_projectilePrefab;
     [SerializeField] Transform m_firePoint;
     [SerializeField] float m_projectileSpeed;
@@ -15,13 +11,10 @@ public class PlayerAttack : MonoBehaviour
     private Vector2 m_lastDirection;
     private Vector3 mousePos;
     private InputAction m_attackAction;
-    public bool m_bowEquipped;
+    private bool m_bowEquipped;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+
 
     private void Awake()
     {
@@ -30,12 +23,7 @@ public class PlayerAttack : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if (m_attackAction.IsPressed())
-        {
-            Debug.Log("Attack!");
-        }
-
+    {    
         if (m_attackAction.IsPressed() && Time.time > m_fireTimeout)
         {
             m_fireTimeout = Time.time + m_fireRate;

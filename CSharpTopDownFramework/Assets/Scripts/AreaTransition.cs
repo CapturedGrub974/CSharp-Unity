@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class AreaTransition : MonoBehaviour
 {
-    private CameraController m_camera;
-    public Vector2 m_newMinPos;
-    public Vector2 m_newMaxPos;
     public Vector3 m_movePlayer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        m_camera = GetComponent<CameraController>();
+        
     }
 
     // Update is called once per frame
@@ -19,11 +17,11 @@ public class AreaTransition : MonoBehaviour
     {
 
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.CompareTag("Player"))
+        if (other.tag == "Player")
         {
-            
+            other.transform.position += m_movePlayer;
         }
     }
 }
