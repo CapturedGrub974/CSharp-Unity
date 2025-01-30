@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MovingObstacleWaypoint
   - Wall
+  - Enemy
   layers:
   - Default
   - TransparentFX

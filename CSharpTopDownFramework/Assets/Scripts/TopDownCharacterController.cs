@@ -28,6 +28,17 @@ public class TopDownCharacterController : MonoBehaviour
     //The maximum speed the player can move
     [SerializeField] private float m_playerMaxSpeed = 1000f;
 
+
+    private float m_activeMoveSpeed;
+    private float m_dashCounter;
+    private float m_dashCooldownCounter;
+    [Header("Dash")]
+    public float m_dashSpeed;
+    public float m_dashLength = .5f, m_dashCooldown = 1f;
+
+    [Header("Lighting parameters")]
+    [SerializeField] private Transform m_torchLight;
+
     #endregion
 
     /// <summary>
@@ -49,7 +60,7 @@ public class TopDownCharacterController : MonoBehaviour
     /// </summary>
     void Start()
     {
-        
+        m_activeMoveSpeed = m_playerSpeed;
     }
 
     /// <summary>
@@ -59,7 +70,7 @@ public class TopDownCharacterController : MonoBehaviour
     private void FixedUpdate()
     {
         //clamp the speed to the maximum speed for if the speed has been changed in code.
-        float speed = m_playerSpeed > m_playerMaxSpeed ? m_playerMaxSpeed : m_playerSpeed;
+        float speed = m_activeMoveSpeed > m_playerMaxSpeed ? m_playerMaxSpeed : m_activeMoveSpeed;
         
         //apply the movement to the character using the clamped speed value.
         m_rigidbody.linearVelocity = m_playerDirection * (speed * Time.fixedDeltaTime);
@@ -88,8 +99,33 @@ public class TopDownCharacterController : MonoBehaviour
             //float angle = Mathf.Atan2(m_torchDirection.y, m_torchDirection.x) * Mathf.Rad2Deg;
             //m_torchLight.rotation = Quaternion.Euler(0, 0, angle - 90);
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (m_dashCooldownCounter <= 0 && m_dashCounter <= 0)
+            {
+                m_activeMoveSpeed = m_dashSpeed;
+                m_dashCounter = m_dashLength;
+            }
+        }
+
+        if (m_dashCounter > 0)
+        {
+            m_dashCounter -= Time.deltaTime;
+
+            if (m_dashCounter <= 0)
+            {
+                m_activeMoveSpeed = m_playerSpeed;
+                m_dashCooldownCounter = m_dashCooldown;
+            }
+        }
+
+        if (m_dashCooldownCounter > 0)
+        {
+            m_dashCooldownCounter -= Time.deltaTime;
+        }
+        Debug.Log(m_playerSpeed);
     }
     
-    [Header("Lighting parameters")]
-    [SerializeField] private Transform m_torchLight;
+    
 }

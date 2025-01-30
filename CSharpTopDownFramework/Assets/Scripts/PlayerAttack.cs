@@ -27,7 +27,7 @@ public class PlayerAttack : MonoBehaviour
         if (m_attackAction.IsPressed() && Time.time > m_fireTimeout)
         {
             m_fireTimeout = Time.time + m_fireRate;
-            Fire();
+            Fire(); 
         }
     }
 

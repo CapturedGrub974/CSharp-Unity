@@ -21,6 +21,7 @@ public class Coin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Attach Coin Transform
         if (when >= delay)
         {
             pasttime = Time.deltaTime;
@@ -31,6 +32,7 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        //Destroy object and increase score when player touches coin
         if (other.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
@@ -40,6 +42,7 @@ public class Coin : MonoBehaviour
 
     private void Awake()
     {
+        //move coins when spawned
         off = new Vector3(Random.Range(-3, 3), off.y, off.z);
         off = new Vector3(off.x, Random.Range(-3, 3), off.z);
     }
