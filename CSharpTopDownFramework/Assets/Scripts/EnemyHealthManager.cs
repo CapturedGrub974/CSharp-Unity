@@ -20,7 +20,9 @@ public class EnemyHealthManager : MonoBehaviour
         {
             gameObject.SetActive(false);
 
-            for (Random.Range(1, 5);
+            int randomIterations = Random.Range(1, 6); // Range is inclusive of min and exclusive of max
+
+            for (int i = 0; i < randomIterations; i++)
             {
                 GameObject coinToSpawn = Instantiate(m_coinPrefab, transform.position, Quaternion.identity);
             }

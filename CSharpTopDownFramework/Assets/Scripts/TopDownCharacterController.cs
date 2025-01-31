@@ -21,6 +21,7 @@ public class TopDownCharacterController : MonoBehaviour
     //The direction that the player is moving in.
     private Vector2 m_playerDirection;
    
+    [SerializeField] private BoxCollider2D m_boxCollider;
 
     [Header("Movement parameters")]
     //The speed at which the player moves
@@ -106,6 +107,7 @@ public class TopDownCharacterController : MonoBehaviour
             {
                 m_activeMoveSpeed = m_dashSpeed;
                 m_dashCounter = m_dashLength;
+                m_boxCollider.enabled = false;
             }
         }
 
@@ -117,6 +119,7 @@ public class TopDownCharacterController : MonoBehaviour
             {
                 m_activeMoveSpeed = m_playerSpeed;
                 m_dashCooldownCounter = m_dashCooldown;
+                m_boxCollider.enabled = true;
             }
         }
 
@@ -124,7 +127,6 @@ public class TopDownCharacterController : MonoBehaviour
         {
             m_dashCooldownCounter -= Time.deltaTime;
         }
-        Debug.Log(m_playerSpeed);
     }
     
     
