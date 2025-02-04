@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7362336596812910487}
   - component: {fileID: 7077037397107092234}
   - component: {fileID: 5773749942140735391}
+  - component: {fileID: 7508611151125851408}
   - component: {fileID: 313602071241075094}
   m_Layer: 0
   m_Name: SkeletonEnemy
@@ -125,7 +126,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000000
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -186,6 +187,23 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.2811911, y: 1.6524799}
   m_EdgeRadius: 0
+--- !u!114 &7508611151125851408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2530868566224220450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed2f880e37e3e3d4482e55e111e1c6e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_homePos: {fileID: 0}
+  m_speed: 200
+  m_range: 0
+  m_maxRange: 7
+  m_minRange: 1.5
 --- !u!114 &313602071241075094
 MonoBehaviour:
   m_ObjectHideFlags: 0

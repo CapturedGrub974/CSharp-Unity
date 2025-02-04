@@ -28,17 +28,21 @@ public class TopDownCharacterController : MonoBehaviour
     [SerializeField] private float m_playerSpeed = 200f;
     //The maximum speed the player can move
     [SerializeField] private float m_playerMaxSpeed = 1000f;
-
-
-    private float m_activeMoveSpeed;
-    private float m_dashCounter;
-    private float m_dashCooldownCounter;
+    
     [Header("Dash")]
     public float m_dashSpeed;
     public float m_dashLength = .5f, m_dashCooldown = 1f;
+    private float m_activeMoveSpeed;
+    private float m_dashCounter;
+    private float m_dashCooldownCounter;
+    private bool m_isDashing;
 
     [Header("Lighting parameters")]
     [SerializeField] private Transform m_torchLight;
+
+    private float m_attackTime = .25f;
+    private float m_attackCounter = .25f;
+    private bool m_isAttacking;
 
     #endregion
 
@@ -73,8 +77,15 @@ public class TopDownCharacterController : MonoBehaviour
         //clamp the speed to the maximum speed for if the speed has been changed in code.
         float speed = m_activeMoveSpeed > m_playerMaxSpeed ? m_playerMaxSpeed : m_activeMoveSpeed;
         
-        //apply the movement to the character using the clamped speed value.
-        m_rigidbody.linearVelocity = m_playerDirection * (speed * Time.fixedDeltaTime);
+        if (!m_isAttacking)
+        {
+            //apply the movement to the character using the clamped speed value.
+            m_rigidbody.linearVelocity = m_playerDirection * (speed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            
+        }
     }
     
     /// <summary>
@@ -101,33 +112,54 @@ public class TopDownCharacterController : MonoBehaviour
             //m_torchLight.rotation = Quaternion.Euler(0, 0, angle - 90);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!m_isDashing)
         {
-            if (m_dashCooldownCounter <= 0 && m_dashCounter <= 0)
+            if (m_isAttacking)
             {
-                m_activeMoveSpeed = m_dashSpeed;
-                m_dashCounter = m_dashLength;
-                m_boxCollider.enabled = false;
+                m_attackCounter -= Time.deltaTime;
+                if (m_attackCounter <= 0)
+                {
+                    m_animator.SetBool("IsAttacking", false);
+                    m_isAttacking = false;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                m_attackCounter = m_attackTime;
+                m_animator.SetBool("IsAttacking", true);
+                m_isAttacking = true;
             }
         }
 
-        if (m_dashCounter > 0)
+        if (!m_isAttacking)
         {
-            m_dashCounter -= Time.deltaTime;
-
-            if (m_dashCounter <= 0)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                m_activeMoveSpeed = m_playerSpeed;
-                m_dashCooldownCounter = m_dashCooldown;
-                m_boxCollider.enabled = true;
+                if (m_dashCooldownCounter <= 0 && m_dashCounter <= 0)
+                {
+                    m_activeMoveSpeed = m_dashSpeed;
+                    m_dashCounter = m_dashLength;
+                    m_boxCollider.enabled = false;
+                }
+            }
+
+            if (m_dashCounter > 0)
+            {
+                m_dashCounter -= Time.deltaTime;
+
+                if (m_dashCounter <= 0)
+                {
+                    m_activeMoveSpeed = m_playerSpeed;
+                    m_dashCooldownCounter = m_dashCooldown;
+                    m_boxCollider.enabled = true;
+                }
+            }
+
+            if (m_dashCooldownCounter > 0)
+            {
+                m_dashCooldownCounter -= Time.deltaTime;
             }
         }
-
-        if (m_dashCooldownCounter > 0)
-        {
-            m_dashCooldownCounter -= Time.deltaTime;
-        }
-    }
-    
-    
+    } 
 }
