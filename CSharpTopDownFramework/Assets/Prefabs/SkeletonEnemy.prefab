@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5773749942140735391}
   - component: {fileID: 7508611151125851408}
   - component: {fileID: 313602071241075094}
+  - component: {fileID: 6666164908533924713}
   m_Layer: 0
   m_Name: SkeletonEnemy
   m_TagString: Enemy
@@ -200,10 +201,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_homePos: {fileID: 0}
-  m_speed: 200
+  m_speed: 2
   m_range: 0
   m_maxRange: 7
-  m_minRange: 1.5
+  m_minRange: 1
 --- !u!114 &313602071241075094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,3 +220,16 @@ MonoBehaviour:
   currentHealth: 20
   maxHealth: 20
   m_coinPrefab: {fileID: 3221561050370832204, guid: d84d532786a3c4b41ababafeb5797003, type: 3}
+--- !u!114 &6666164908533924713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2530868566224220450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe08e5b0856c004aadd9fd508c7f0dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damage: 3
