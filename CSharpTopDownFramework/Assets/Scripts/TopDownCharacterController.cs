@@ -60,8 +60,8 @@ public class TopDownCharacterController : MonoBehaviour
 
         if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
         {
-            m_animator.SetFloat("LastX", Input.GetAxisRaw("Horizontal"));
-            m_animator.SetFloat("LastY", Input.GetAxisRaw("Vertical"));
+            m_animator.SetFloat("LastHorizontal", Input.GetAxisRaw("Horizontal"));
+            m_animator.SetFloat("LastVertical", Input.GetAxisRaw("Vertical"));
             m_animator.SetBool("Animator", true);
         }
 

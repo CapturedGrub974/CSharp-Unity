@@ -8,13 +8,7 @@ public class Key : MonoBehaviour
     public bool isPickedUp;
     private Vector2 vel;
     public float smoothTime;
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (isPickedUp)
@@ -29,11 +23,7 @@ public class Key : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && !isPickedUp)
         {
             isPickedUp = true;
-        }
-
-        if (other.gameObject.CompareTag("Door"))
-        {
-            Destroy(gameObject);
+            transform.SetParent(other.transform);
         }
     }
 }

@@ -7,6 +7,9 @@ TagManager:
   - MovingObstacleWaypoint
   - Wall
   - Enemy
+  - PlayerWeapon
+  - Door
+  - Key
   layers:
   - Default
   - TransparentFX

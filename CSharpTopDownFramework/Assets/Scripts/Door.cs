@@ -7,7 +7,7 @@ public class Door : MonoBehaviour
     public GameObject player;
     public bool locked;
     public AreaTransition areaTransition;
-    // Start is called before the first frame update
+
     void Start()
     {
         locked = true;
@@ -16,10 +16,20 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Key"))
+        if (other.CompareTag("Player"))
         {
-            locked = false;
-            areaTransition.enabled = true;
+            Key key = other.GetComponentInChildren<Key>();
+            if (other.gameObject.CompareTag("Key"))
+            {
+                locked = false;
+                areaTransition.enabled = true;
+            }
+
+            if (key != null && key.isPickedUp)
+            {
+                Destroy(key.gameObject);
+            }
         }
+        
     }
 }

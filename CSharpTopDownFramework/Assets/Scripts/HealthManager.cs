@@ -62,7 +62,7 @@ public class HealthManager : MonoBehaviour
         //if health falls to 0, destroy player object and load death scene
         if (currentHealth <= 0)
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
             SceneManager.LoadScene(2);
         }
     }
