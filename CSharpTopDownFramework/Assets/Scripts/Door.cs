@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    public GameObject player;
-    public bool locked;
-    public AreaTransition areaTransition;
+    public GameObject m_player;
+    public bool m_locked;
+    public AreaTransition m_areaTransition;
 
     void Start()
     {
-        locked = true;
-        areaTransition.enabled = false;
+        m_locked = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -21,15 +20,15 @@ public class Door : MonoBehaviour
             Key key = other.GetComponentInChildren<Key>();
             if (other.gameObject.CompareTag("Key"))
             {
-                locked = false;
-                areaTransition.enabled = true;
+                
             }
 
-            if (key != null && key.isPickedUp)
+            if (key != null && key.m_isPickedUp)
             {
                 Destroy(key.gameObject);
+                m_locked = false;
+                m_areaTransition.m_isEnabled = true;
             }
         }
-        
     }
 }
